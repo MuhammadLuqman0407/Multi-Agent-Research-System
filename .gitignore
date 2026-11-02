@@ -1,4 +1,4 @@
-# Environment files (every folder)
+# ===== Secrets (never push these) =====
 .env
 .env.*
 !.env.example
@@ -6,50 +6,33 @@
 **/.env.*
 !**/.env.example
 
-# Python
-.venv/
-venv/
+# ===== Python =====
 __pycache__/
 **/__pycache__/
 *.py[cod]
-*$py.class
+.venv/
+venv/
+env/
 *.egg-info/
 .pytest_cache/
-.ruff_cache/
-.mypy_cache/
+.ipynb_checkpoints/
 
-# Node / React (every folder)
+# ===== Node / Frontend =====
 node_modules/
 **/node_modules/
 dist/
-dist-ssr/
 build/
-.vite/
-
-# npm / yarn / pnpm logs (keep package.json and package-lock.json in git)
+*.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-*.local
 
-# OS / editor
+# ===== Root duplicate files (the real ones live in AI_services/) =====
+/agents.py
+/pipeline.py
+/tools.py
+/requirements.txt
+
+# ===== Editor / OS =====
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
-.idea/
-.vscode/*
-!.vscode/extensions.json
-
-# Docker
-*.log
-
-# Duplicate copies at repo root (real files live in AI_services/)
-/pipeline.py
-/agents.py
-/tools.py
-/requirements.txt
-
-/pipeline.py
-/agents.py
-/tools.py
-/requirements.txt
