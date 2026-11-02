@@ -42,4 +42,9 @@ Thumbs.db
 
 # Docker
 *.log
-AI_services/.env
+
+# Duplicate copies at repo root (real files live in AI_services/)
+/pipeline.py
+/agents.py
+/tools.py
+/requirements.txt
