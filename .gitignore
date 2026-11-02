@@ -1,0 +1,45 @@
+# Environment files (every folder)
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node / React (every folder)
+node_modules/
+**/node_modules/
+dist/
+dist-ssr/
+build/
+.vite/
+
+# npm / yarn / pnpm logs (keep package.json and package-lock.json in git)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Docker
+*.log
+AI_services/.env
