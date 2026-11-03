@@ -1,0 +1,12 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - ./AI_services:/app/AI_services
+      - ./AI_services/.env:/app/AI_services/.env:ro
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload

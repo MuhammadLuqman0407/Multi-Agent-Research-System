@@ -7,9 +7,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# model setup
-# llm = ChatGroq(model='llama-3.1-8b-instant', temperature=0)
-llm = ChatGroq(model="openai/gpt-oss-20b", temperature=0)
+# Smaller Groq model: gpt-oss-20b hits the 8k TPM free-tier cap.
+llm = ChatGroq(
+    model="llama-3.1-8b-instant",
+    temperature=0,
+    max_retries=6,
+)
 
 # 1st agent 
 def build_search_agent():
