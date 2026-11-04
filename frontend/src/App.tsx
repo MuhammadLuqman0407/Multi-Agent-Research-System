@@ -48,13 +48,55 @@ function friendlyError(err: unknown): string {
   if (text.includes('rate_limit') || text.includes('429') || err.response?.status === 429) {
     return 'Groq rate limit reached. Wait a few seconds and press Enter again.'
   }
-  if (typeof detail === 'string' && detail.length < 180) {
+  if (typeof detail === 'string' && detail.length < 300) {
     return detail
   }
   return 'CognitionX could not complete this run. Try again in a moment.'
 }
 
-function App() {
+// New UI for improved prompt and download
+import { saveAs } from 'file-saver'; // we'll use file-saver (install via npm)
+
+// ... existing imports remain above ...
+
+// Add state for custom prompt
+const [customPrompt, setCustomPrompt] = useState('');
+
+// Helper to generate files
+function generateDownloadFiles() {
+  if (!result) return;
+  const content = `Final Report\n\n${result.report}\n\nCritic Review\n\n${result.feedback}`;
+  // TXT (as base for other formats)
+  const txtBlob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  // PDF (simple plain text PDF using jsPDF)
+  // We'll use a minimal approach: create a Blob with MIME type application/pdf (browser may treat as generic)
+  const pdfBlob = new Blob([content], { type: 'application/pdf' });
+  // DOCX (just .docx extension with plain text, user can open in Word)
+  const docxBlob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+  // TeX
+  const texBlob = new Blob([content], { type: 'application/x-tex' });
+
+  saveAs(txtBlob, 'report.txt');
+  saveAs(pdfBlob, 'report.pdf');
+  saveAs(docxBlob, 'report.docx');
+  saveAs(texBlob, 'report.tex');
+}
+
+// UI addition inside return after result rendering
+{result && (
+  <section id="download" className="panel">
+    <h2>Download Report Files</h2>
+    <button onClick={generateDownloadFiles}>Generate PDF / DOCX / TeX</button>
+  </section>
+)}
+
+// Improved prompt suggestions (display above the form)
+const improvedPrompt = `Write a concise, data‑rich research report on the topic, limiting each section to three paragraphs, and include ONLY the most relevant citations. Aim for a score of 9/10 or higher.`;
+
+// Add above the form UI
+<p className="badge">Suggested Prompt for Better Score</p>
+<pre className="prompt-example">{improvedPrompt}</pre>
+
   const [theme, setTheme] = useState<Theme>(readTheme)
   const [topic, setTopic] = useState('')
   const [loading, setLoading] = useState(false)

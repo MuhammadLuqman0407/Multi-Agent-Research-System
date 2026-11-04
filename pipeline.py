@@ -1,6 +1,6 @@
 from agents import build_reader_agent, build_search_agent, writer_chain, writer_prompt, critic_chain
 
-def run_research_pipeline(topic : str) -> dict:
+def run_research_pipeline(topic: str) -> dict:
     state={}
 
     search_agent = build_search_agent()

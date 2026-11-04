@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Smaller Groq model: gpt-oss-20b hits the 8k TPM free-tier cap.
+# Use an available Groq model (openai/gpt-oss-20b)
 llm = ChatGroq(
-    model="llama-3.1-8b-instant",
+    model="openai/gpt-oss-20b",
     temperature=0,
     max_retries=6,
 )
