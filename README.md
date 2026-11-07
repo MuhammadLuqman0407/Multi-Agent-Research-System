@@ -96,7 +96,7 @@ docker-compose up --build
    - ✍️ **Writer Chain** — generates a structured research report
    - 🧐 **Critic Chain** — scores and reviews the report
 5. **Backend** returns the full result (search results, scraped content, report, feedback) as JSON.
-6. **Frontend** displays each section in styled panels.
+6. **Frontend** displays the report and review, shows the source material, and can export reports as PDF, Word, text, or LaTeX.
 
 ---
 
@@ -105,9 +105,9 @@ docker-compose up --build
 ```
 Multi-Agent-Research-System/
 ├── .env                     # Root environment variables
-├── agents.py                # Root-level agent definitions
-├── pipeline.py              # Root-level pipeline (CLI usage)
-├── tools.py                 # Root-level tools (web_search, scrape_url)
+├── agents.py                # Compatibility exports for AI_services agents
+├── pipeline.py              # CLI entry point for the shared research pipeline
+├── tools.py                 # Compatibility exports for AI_services tools
 ├── requirements.txt         # Python dependencies
 ├── docker-compose.yml       # Docker multi-container setup
 │
@@ -125,9 +125,11 @@ Multi-Agent-Research-System/
 │   └── __init__.py
 │
 └── frontend/
+    ├── public/
+    │   └── logo.svg           # CognitionX brand mark and favicon
     ├── src/
     │   ├── App.tsx           # Main React component (form + results)
-    │   ├── App.css           # Styling
+    │   ├── App.css           # Responsive UI and theme styling
     │   └── utils/api.ts      # Axios client → backend
     ├── package.json
     └── vite.config.ts
@@ -162,4 +164,3 @@ python AI_services/pipeline.py
 - **"model does not exist"** — Your Groq API key doesn't have access to the configured model. Run the model-check script to see available models.
 - **Rate limit (429)** — Groq free tier has token-per-minute limits. Wait a few seconds and try again.
 - **Frontend can't reach backend** — Make sure the backend is running on port 8000. Check CORS settings in `backend/main.py`.
-

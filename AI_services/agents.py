@@ -1,9 +1,13 @@
-from langchain.agents import create_agent
-from langchain_groq import ChatGroq
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from tools import web_search, scrape_url
 from dotenv import load_dotenv
+from langchain.agents import create_agent
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
+
+if __package__:
+    from .tools import scrape_url, web_search
+else:
+    from tools import scrape_url, web_search
 
 load_dotenv()
 
@@ -18,7 +22,12 @@ llm = ChatGroq(
 def build_search_agent():
     return create_agent(
         model=llm,
-        tools=[web_search]
+        tools=[web_search],
+        system_prompt=(
+            "You are a web research agent. Always call web_search for the user's "
+            "topic. Return the search tool's source URLs and snippets without "
+            "inventing facts or citations."
+        ),
     )
 
 
@@ -26,12 +35,24 @@ def build_search_agent():
 def build_reader_agent():
     return create_agent(
         model=llm,
-        tools=[scrape_url]
+        tools=[scrape_url],
+        system_prompt=(
+            "You are a research reader agent. Choose a URL that appears in the "
+            "provided search results, call scrape_url on it, and summarize only "
+            "the content returned by that tool. Do not invent sources."
+        ),
     )
 
 # creat the chat template
 writer_prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are an expert research writer. Write clear, structured and insightful reports."),
+    (
+        "system",
+        (
+            "You are an expert research writer. Write clear, structured reports using "
+            "only the supplied search and scraped content. Do not invent facts or "
+            "citations; identify gaps when the evidence is limited."
+        ),
+    ),
     ("human", """Write a detailed research report on the topic below.
 
 Topic: {topic}

@@ -15,7 +15,7 @@ sys.path.insert(0, str(AI_DIR))
 load_dotenv(AI_DIR / ".env")
 load_dotenv(ROOT / ".env")
 
-from pipeline import run_research_pipeline  # noqa: E402
+from pipeline import run_research_pipeline
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cognitionx")
@@ -76,10 +76,17 @@ async def research(payload: ResearchRequest):
             ) from exc
         raise HTTPException(status_code=500, detail=message) from exc
 
-    return ResearchResponse(
-        topic=topic,
-        search_results=str(state.get("search_results") or ""),
-        scraped_content=str(state.get("scraped_content") or ""),
-        report=str(state.get("report") or ""),
-        feedback=str(state.get("feedback") or ""),
-    )
+    required_fields = ("search_results", "scraped_content", "report", "feedback")
+    missing_fields = [
+        field
+        for field in required_fields
+        if not isinstance(state.get(field), str) or not state[field].strip()
+    ]
+    if missing_fields:
+        logger.error("Research pipeline returned empty fields: %s", missing_fields)
+        raise HTTPException(
+            status_code=502,
+            detail="Research pipeline returned an incomplete response. Please try again.",
+        )
+
+    return ResearchResponse(topic=topic, **state)
