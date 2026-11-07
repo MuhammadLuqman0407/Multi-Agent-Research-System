@@ -23,6 +23,7 @@ node_modules/
 dist/
 build/
 *.log
+<<<<<<< HEAD
 npm-debug.log*
 
 # ===== Root duplicate files (the real ones live in AI_services/) =====
@@ -36,3 +37,11 @@ npm-debug.log*
 .idea/
 .DS_Store
 Thumbs.db
+=======
+
+# Duplicate copies at repo root (real files live in AI_services/)
+/pipeline.py
+/agents.py
+/tools.py
+/requirements.txt
+>>>>>>> development
