@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-# Multi-Agent-Research-System
-=======
 # 🧠 Multi-Agent Research System — CognitionX DeepThinker
 
 An AI-powered multi-agent research system that searches, reads, writes, and critiques research reports — all from a single question typed in the UI.
 
 ---
-
 ## 📋 Prerequisites
 
 - **Python 3.11+** (virtual-env recommended)
