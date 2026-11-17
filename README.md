@@ -163,4 +163,7 @@ python AI_services/pipeline.py
 - **"model does not exist"** — Your Groq API key doesn't have access to the configured model. Run the model-check script to see available models.
 - **Rate limit (429)** — Groq free tier has token-per-minute limits. Wait a few seconds and try again.
 - **Frontend can't reach backend** — Make sure the backend is running on port 8000. Check CORS settings in `backend/main.py`.
->>>>>>> development
+
+
+
+-- Under Development Phase --
